@@ -5,7 +5,12 @@ class TodoItem extends React.Component {
 
   onFormEditSubmit = e => {
     e.preventDefault();
-    this.props.onEditSubmit(e.target.children[1].id, this.state.content);
+    this.state.content === ''
+      ? this.props.onEditSubmit(
+          e.target.children[1].id,
+          this.props.item.content
+        )
+      : this.props.onEditSubmit(e.target.children[1].id, this.state.content);
   };
 
   itemStyle = () => {
@@ -41,7 +46,7 @@ class TodoItem extends React.Component {
               {content}
             </p>
             <div className="ui input" style={this.editStyle()}>
-              <form className="ui input" onSubmit={this.onFormEditSubmit}>
+              <form className="ui input focus" onSubmit={this.onFormEditSubmit}>
                 <input
                   type="text"
                   defaultValue={content}
