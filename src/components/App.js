@@ -16,7 +16,7 @@ class App extends React.Component {
       {
         id: uuid.v4(),
         content: 'You can edit or delete this item',
-        completed: false,
+        completed: true,
         editActive: 'none',
         inputActive: 'block'
       }

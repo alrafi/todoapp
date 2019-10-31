@@ -28,7 +28,7 @@ class TodoItem extends React.Component {
   };
 
   render() {
-    const { id, content } = this.props.item;
+    const { id, content, completed } = this.props.item;
     return (
       <div className="ui relaxed items">
         <div className="item">
@@ -52,7 +52,6 @@ class TodoItem extends React.Component {
                   id={id}
                   className="ui icon button"
                   type="submit"
-                  // onClick={this.props.saveItem.bind(this, id)}
                   style={{ marginLeft: 10 }}
                 >
                   <i className="save icon"></i>
@@ -63,6 +62,7 @@ class TodoItem extends React.Component {
           <button className="ui icon button">
             <input
               type="checkbox"
+              defaultChecked={completed}
               onChange={this.props.markComplete.bind(this, id)}
             />
           </button>
