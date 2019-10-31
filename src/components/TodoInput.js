@@ -16,6 +16,7 @@ class TodoInput extends React.Component {
           <input
             type="text"
             value={this.state.content}
+            placeholder="add to do list....."
             onChange={e => this.setState({ content: e.target.value })}
             style={{ width: '50vw' }}
           />
