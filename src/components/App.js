@@ -1,6 +1,9 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import TodoInput from './TodoInput';
 import TodoList from './TodoList';
+import About from './pages/About';
+import Header from '../../src/Header';
 import uuid from 'uuid';
 
 class App extends React.Component {
@@ -73,18 +76,29 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
-        <h1>To do app</h1>
-        <TodoInput onSubmit={this.onInputSubmit} />
-        <TodoList
-          items={this.state.items}
-          markComplete={this.markComplete}
-          delItem={this.delItem}
-          editItem={this.editItem}
-          saveItem={this.saveItem}
-          onEditSubmit={this.onInputEditSubmit}
-        />
-      </div>
+      <BrowserRouter>
+        <div className="ui container">
+          <Header />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <React.Fragment>
+                <TodoInput onSubmit={this.onInputSubmit} />
+                <TodoList
+                  items={this.state.items}
+                  markComplete={this.markComplete}
+                  delItem={this.delItem}
+                  editItem={this.editItem}
+                  saveItem={this.saveItem}
+                  onEditSubmit={this.onInputEditSubmit}
+                />
+              </React.Fragment>
+            )}
+          />
+          <Route path="/about" component={About} />
+        </div>
+      </BrowserRouter>
     );
   }
 }
