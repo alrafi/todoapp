@@ -27,14 +27,14 @@ class App extends React.Component {
     const newTodoItem = {
       id: uuid.v4(),
       content,
-      completed: false
+      completed: false,
+      editActive: 'none',
+      inputActive: 'block'
     };
     this.setState({ items: [...this.state.items, newTodoItem] });
   };
 
   onInputEditSubmit = (id, content) => {
-    // console.log(id);
-    // console.log(content);
     this.setState(prevState => ({
       items: prevState.items.map(item =>
         item.id === id
@@ -42,7 +42,6 @@ class App extends React.Component {
           : item
       )
     }));
-    // console.log('save ', id);
   };
 
   markComplete = id => {
@@ -65,12 +64,9 @@ class App extends React.Component {
   editItem = id => {
     this.setState(prevState => ({
       items: prevState.items.map(item =>
-        item.id === id ? { ...item, editActive: 'block' } : item
-      )
-    }));
-    this.setState(prevState => ({
-      items: prevState.items.map(item =>
-        item.id === id ? { ...item, inputActive: 'none' } : item
+        item.id === id
+          ? { ...item, editActive: 'block', inputActive: 'none' }
+          : item
       )
     }));
   };

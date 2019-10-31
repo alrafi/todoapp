@@ -4,16 +4,8 @@ class TodoItem extends React.Component {
   state = { content: '' };
 
   onFormEditSubmit = e => {
-    console.log(e.target.children[1].id);
     e.preventDefault();
-    this.props.onEditSubmit(
-      e.target.children[1].id,
-      this.state.content // this.state.editActive,
-      // this.state.inputActive
-    );
-    // this.setState({ content: '' });
-    // this.setState({ editActive: 'none' });
-    // this.setState({ inputActive: 'block' });
+    this.props.onEditSubmit(e.target.children[1].id, this.state.content);
   };
 
   itemStyle = () => {
@@ -36,7 +28,6 @@ class TodoItem extends React.Component {
   };
 
   render() {
-    // console.log(this.props.item);
     const { id, content } = this.props.item;
     return (
       <div className="ui relaxed items">
