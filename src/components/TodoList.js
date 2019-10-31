@@ -1,8 +1,13 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
 class TodoList extends React.Component {
   render() {
-    return <div>Todo list</div>;
+    return this.props.items.map(todoItem => (
+      <div className="ui segment">
+        <TodoItem key={todoItem.id} item={todoItem} />
+      </div>
+    ));
   }
 }
 
