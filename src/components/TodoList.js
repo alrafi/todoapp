@@ -11,6 +11,8 @@ class TodoList extends React.Component {
           markComplete={this.props.markComplete}
           delItem={this.props.delItem}
           editItem={this.props.editItem}
+          saveItem={this.props.saveItem}
+          onEditSubmit={this.props.onEditSubmit}
         />
       </div>
     ));

@@ -32,6 +32,19 @@ class App extends React.Component {
     this.setState({ items: [...this.state.items, newTodoItem] });
   };
 
+  onInputEditSubmit = (id, content) => {
+    // console.log(id);
+    // console.log(content);
+    this.setState(prevState => ({
+      items: prevState.items.map(item =>
+        item.id === id
+          ? { ...item, content, editActive: 'none', inputActive: 'block' }
+          : item
+      )
+    }));
+    // console.log('save ', id);
+  };
+
   markComplete = id => {
     this.setState({
       items: this.state.items.map(item => {
@@ -72,6 +85,8 @@ class App extends React.Component {
           markComplete={this.markComplete}
           delItem={this.delItem}
           editItem={this.editItem}
+          saveItem={this.saveItem}
+          onEditSubmit={this.onInputEditSubmit}
         />
       </div>
     );

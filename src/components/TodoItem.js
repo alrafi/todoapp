@@ -1,7 +1,20 @@
 import React from 'react';
 
 class TodoItem extends React.Component {
-  // state = { editActive: 'none' };
+  state = { content: '' };
+
+  onFormEditSubmit = e => {
+    console.log(e.target.children[1].id);
+    e.preventDefault();
+    this.props.onEditSubmit(
+      e.target.children[1].id,
+      this.state.content // this.state.editActive,
+      // this.state.inputActive
+    );
+    // this.setState({ content: '' });
+    // this.setState({ editActive: 'none' });
+    // this.setState({ inputActive: 'block' });
+  };
 
   itemStyle = () => {
     return {
@@ -23,7 +36,7 @@ class TodoItem extends React.Component {
   };
 
   render() {
-    console.log(this.props.item);
+    // console.log(this.props.item);
     const { id, content } = this.props.item;
     return (
       <div className="ui relaxed items">
@@ -37,18 +50,23 @@ class TodoItem extends React.Component {
               {content}
             </p>
             <div className="ui input" style={this.editStyle()}>
-              <input
-                type="text"
-                defaultValue={content}
-                style={{ width: '50vw' }}
-              />
-              <button
-                className="ui icon button"
-                type="submit"
-                style={{ marginLeft: 10 }}
-              >
-                <i className="save icon"></i>
-              </button>
+              <form className="ui input" onSubmit={this.onFormEditSubmit}>
+                <input
+                  type="text"
+                  defaultValue={content}
+                  style={{ width: '50vw' }}
+                  onChange={e => this.setState({ content: e.target.value })}
+                />
+                <button
+                  id={id}
+                  className="ui icon button"
+                  type="submit"
+                  // onClick={this.props.saveItem.bind(this, id)}
+                  style={{ marginLeft: 10 }}
+                >
+                  <i className="save icon"></i>
+                </button>
+              </form>
             </div>
           </div>
           <button className="ui icon button">
