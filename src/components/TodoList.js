@@ -9,6 +9,8 @@ class TodoList extends React.Component {
           key={todoItem.id}
           item={todoItem}
           markComplete={this.props.markComplete}
+          delItem={this.props.delItem}
+          editItem={this.props.editItem}
         />
       </div>
     ));

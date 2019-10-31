@@ -7,14 +7,18 @@ class App extends React.Component {
   state = {
     items: [
       {
-        id: 1,
+        id: uuid.v4(),
         content: 'Hi there, this is your first todo item',
-        completed: false
+        completed: false,
+        editActive: 'none',
+        inputActive: 'block'
       },
       {
-        id: 2,
-        content: 'You can delete this item',
-        completed: false
+        id: uuid.v4(),
+        content: 'You can edit or delete this item',
+        completed: false,
+        editActive: 'none',
+        inputActive: 'block'
       }
     ]
   };
@@ -37,7 +41,25 @@ class App extends React.Component {
         return item;
       })
     });
-    console.log(id);
+  };
+
+  delItem = id => {
+    this.setState({
+      items: [...this.state.items.filter(item => item.id !== id)]
+    });
+  };
+
+  editItem = id => {
+    this.setState(prevState => ({
+      items: prevState.items.map(item =>
+        item.id === id ? { ...item, editActive: 'block' } : item
+      )
+    }));
+    this.setState(prevState => ({
+      items: prevState.items.map(item =>
+        item.id === id ? { ...item, inputActive: 'none' } : item
+      )
+    }));
   };
 
   render() {
@@ -45,7 +67,12 @@ class App extends React.Component {
       <div className="ui container">
         <h1>To do app</h1>
         <TodoInput onSubmit={this.onInputSubmit} />
-        <TodoList items={this.state.items} markComplete={this.markComplete} />
+        <TodoList
+          items={this.state.items}
+          markComplete={this.markComplete}
+          delItem={this.delItem}
+          editItem={this.editItem}
+        />
       </div>
     );
   }

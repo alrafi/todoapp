@@ -17,12 +17,14 @@ class TodoInput extends React.Component {
             type="text"
             value={this.state.content}
             onChange={e => this.setState({ content: e.target.value })}
+            style={{ width: '50vw' }}
           />
           <button
-            className="ui circular icon button"
+            type="submit"
+            className="ui icon button"
             style={{ marginLeft: 10 }}
           >
-            <i className="inverted circular check link icon"></i>
+            <i className="check icon"></i>
           </button>
         </form>
       </div>
