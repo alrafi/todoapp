@@ -12,16 +12,12 @@ class App extends React.Component {
       {
         id: uuid.v4(),
         content: 'Hi there, this is your first todo item',
-        completed: false,
-        editActive: 'none',
-        inputActive: 'block'
+        completed: false
       },
       {
         id: uuid.v4(),
         content: 'You can edit or delete this item',
-        completed: true,
-        editActive: 'none',
-        inputActive: 'block'
+        completed: true
       }
     ]
   };
@@ -30,9 +26,7 @@ class App extends React.Component {
     const newTodoItem = {
       id: uuid.v4(),
       content,
-      completed: false,
-      editActive: 'none',
-      inputActive: 'block'
+      completed: false
     };
     this.setState({ items: [...this.state.items, newTodoItem] });
   };
@@ -40,9 +34,7 @@ class App extends React.Component {
   onInputEditSubmit = (id, content) => {
     this.setState(prevState => ({
       items: prevState.items.map(item =>
-        item.id === id
-          ? { ...item, content, editActive: 'none', inputActive: 'block' }
-          : item
+        item.id === id ? { ...item, content } : item
       )
     }));
   };
@@ -64,15 +56,15 @@ class App extends React.Component {
     });
   };
 
-  editItem = id => {
-    this.setState(prevState => ({
-      items: prevState.items.map(item =>
-        item.id === id
-          ? { ...item, editActive: 'block', inputActive: 'none' }
-          : item
-      )
-    }));
-  };
+  // editItem = id => {
+  //   this.setState(prevState => ({
+  //     items: prevState.items.map(item =>
+  //       item.id === id
+  //         ? { ...item, editActive: 'block', inputActive: 'none' }
+  //         : item
+  //     )
+  //   }));
+  // };
 
   render() {
     return (
