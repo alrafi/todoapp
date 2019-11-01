@@ -7,7 +7,6 @@ class TodoItem extends React.Component {
   };
 
   onFormEditSubmit = e => {
-    // console.log(e.target.children[1].id);
     e.preventDefault();
     this.state.content === ''
       ? this.props.onEditSubmit(
@@ -21,7 +20,6 @@ class TodoItem extends React.Component {
   };
 
   onButtonEdit = e => {
-    // console.log(e.target.id);
     this.setState({
       editStatus: {
         editId: e.target.id,
@@ -40,21 +38,18 @@ class TodoItem extends React.Component {
 
   editStyle = () => {
     return {
-      // display: this.props.item.editActive
       display: this.state.editStatus.editActive
     };
   };
 
   contentStyle = () => {
     return {
-      // display: this.props.item.inputActive
       display: this.state.editStatus.inputActive
     };
   };
 
   render() {
-    // console.log(this.state.editStatus);
-    const { id, content, completed } = this.props.item;
+    const { id, title, completed } = this.props.item;
     return (
       <div className="ui relaxed items">
         <div className="item">
@@ -64,13 +59,13 @@ class TodoItem extends React.Component {
               className="header"
               style={{ ...this.itemStyle(), ...this.contentStyle() }}
             >
-              {content}
+              {title}
             </p>
             <div className="ui input" style={this.editStyle()}>
               <form className="ui input focus" onSubmit={this.onFormEditSubmit}>
                 <input
                   type="text"
-                  defaultValue={content}
+                  defaultValue={title}
                   style={{ width: '50vw' }}
                   onChange={e => this.setState({ content: e.target.value })}
                 />
@@ -95,7 +90,6 @@ class TodoItem extends React.Component {
           <button
             className="ui icon button"
             id={id}
-            // onClick={this.props.editItem.bind(this, id)}
             onClick={this.onButtonEdit}
           >
             <i className="edit icon"></i>

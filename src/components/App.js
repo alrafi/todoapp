@@ -4,39 +4,49 @@ import TodoInput from './TodoInput';
 import TodoList from './TodoList';
 import About from './pages/About';
 import Header from '../../src/Header';
-import uuid from 'uuid';
+import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    items: [
-      {
-        id: uuid.v4(),
-        content: 'Hi there, this is your first todo item',
+    items: []
+  };
+
+  componentDidMount() {
+    axios
+      .get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(res => this.setState({ items: res.data }));
+  }
+
+  onInputSubmit = async title => {
+    await axios
+      .post('https://jsonplaceholder.typicode.com/todos', {
+        title,
         completed: false
-      },
-      {
-        id: uuid.v4(),
-        content: 'You can edit or delete this item',
-        completed: true
-      }
-    ]
+      })
+      .then(res => this.setState({ items: [...this.state.items, res.data] }));
   };
 
-  onInputSubmit = content => {
-    const newTodoItem = {
-      id: uuid.v4(),
-      content,
-      completed: false
+  onInputEditSubmit = async (id, title) => {
+    console.log(id, title);
+    const headers = {
+      'Content-type': 'application/json; charset=UTF-8'
     };
-    this.setState({ items: [...this.state.items, newTodoItem] });
-  };
-
-  onInputEditSubmit = (id, content) => {
-    this.setState(prevState => ({
-      items: prevState.items.map(item =>
-        item.id === id ? { ...item, content } : item
+    await axios
+      .patch(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        { title },
+        { headers }
       )
-    }));
+      // .then(res => console.log(res))
+      .then(res => {
+        this.setState(prevState => ({
+          items: prevState.items.map(item =>
+            item.id == id ? { ...item, title } : item
+          )
+        }));
+        console.log(this.state.items);
+      })
+      .catch(err => console.error(err));
   };
 
   markComplete = id => {
@@ -50,21 +60,15 @@ class App extends React.Component {
     });
   };
 
-  delItem = id => {
-    this.setState({
-      items: [...this.state.items.filter(item => item.id !== id)]
-    });
+  delItem = async id => {
+    await axios
+      .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(res =>
+        this.setState({
+          items: [...this.state.items.filter(item => item.id !== id)]
+        })
+      );
   };
-
-  // editItem = id => {
-  //   this.setState(prevState => ({
-  //     items: prevState.items.map(item =>
-  //       item.id === id
-  //         ? { ...item, editActive: 'block', inputActive: 'none' }
-  //         : item
-  //     )
-  //   }));
-  // };
 
   render() {
     return (
